@@ -1,0 +1,6 @@
+<div
+  class="box"
+  [style.width.px]="node.size"
+  [style.height.px]="node.size"
+  [ngClass]="{ start: node.state === State.start, end: node.state === State.end }"
+></div>

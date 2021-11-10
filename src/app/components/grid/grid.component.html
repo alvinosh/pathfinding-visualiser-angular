@@ -1,0 +1,9 @@
+<div class="container">
+  <div *ngFor="let r of [].constructor(rows); let i = index" class="row">
+    <div *ngFor="let c of [].constructor(cols); let j = index" class="col">
+      <node #node [node]="nodes[i][j]"></node>
+      <!-- <p #node>hi</p> -->
+      <!-- <gv-node #node [node]="nodes[rn][cn]" (dropped)="Drop($event)"></gv-node> -->
+    </div>
+  </div>
+</div>

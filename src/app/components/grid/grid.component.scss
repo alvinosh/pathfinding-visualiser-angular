@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: $terciary;
+}
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+}

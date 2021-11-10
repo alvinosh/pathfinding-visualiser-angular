@@ -1,0 +1,15 @@
+@import '../../styles/variables.scss';
+
+.box {
+  box-sizing: border-box;
+
+  border: 1px rgba($primary, 0.2) solid;
+}
+
+.start {
+  background-color: red;
+}
+
+.end {
+  background-color: blue;
+}
