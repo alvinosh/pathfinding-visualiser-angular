@@ -10,10 +10,38 @@ export class GridComponent implements OnInit {
 
   cell_size = 30;
 
+  mouse_down = false;
+
   cols: number;
   rows: number;
 
   nodes: Array<Array<Node>> = [];
+
+  start_node_i: [number, number] = [5, 5];
+  end_node_i: [number, number] = [5, 10];
+
+  active_node: State = State.start;
+
+  change_node(i: number, j: number) {
+    if (!this.mouse_down) return;
+    switch (this.active_node) {
+      case State.start:
+        if (this.end_node_i[0] === i && this.end_node_i[1] === j) break;
+        this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.open;
+        this.start_node_i = [i, j];
+        this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.start;
+        break;
+      case State.end:
+        if (this.start_node_i[0] === i && this.start_node_i[1] === j) break;
+        this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.open;
+        this.end_node_i = [i, j];
+        this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.end;
+    }
+  }
+
+  toggle_down(state: boolean) {
+    this.mouse_down = state;
+  }
 
   constructor() {
     let screen_width = window.innerWidth;
@@ -30,8 +58,8 @@ export class GridComponent implements OnInit {
       this.nodes.push(cols);
     }
 
-    this.nodes[5][5].state = State.start;
-    this.nodes[5][10].state = State.end;
+    this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.start;
+    this.nodes[this.end_node_i[0]][this.end_node_i[1]].state = State.end;
   }
 
   ngOnInit() {}

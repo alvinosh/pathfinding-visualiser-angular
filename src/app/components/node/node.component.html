@@ -2,5 +2,12 @@
   class="box"
   [style.width.px]="node.size"
   [style.height.px]="node.size"
-  [ngClass]="{ start: node.state === State.start, end: node.state === State.end }"
+  [ngClass]="{
+    start: node.state === State.start,
+    end: node.state === State.end,
+    path: node.state === State.path,
+    wall: node.state === State.wall,
+    open: node.state === State.open,
+    closed: node.state === State.closed
+  }"
 ></div>

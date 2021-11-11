@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="node-container" (click)="change_active(State.start)" [class.active]="selected_state === State.start">
+    <div class="box start"></div>
+    <div class="node-text">start</div>
+  </div>
+  <div class="node-container" (click)="change_active(State.end)" [class.active]="selected_state === State.end">
+    <div class="box end"></div>
+    <div class="node-text">end</div>
+  </div>
+  <div class="node-container" (click)="change_active(State.wall)" [class.active]="selected_state === State.wall">
+    <div class="box wall"></div>
+    <div class="node-text">wall</div>
+  </div>
+</div>
