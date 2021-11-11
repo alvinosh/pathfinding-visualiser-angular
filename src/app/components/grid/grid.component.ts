@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren, ɵɵstylePropInterpolate1 } from '@angular/core';
 import { Action } from 'src/app/interfaces/action';
 import { ActionsService } from 'src/app/services/actions.service';
 import { Node, State } from '../../interfaces/node';
@@ -19,8 +19,8 @@ export class GridComponent implements OnInit {
 
   nodes: Array<Array<Node>> = [];
 
-  start_node_i: [number, number] = [5, 5];
-  end_node_i: [number, number] = [5, 10];
+  start_node_i: [number, number];
+  end_node_i: [number, number];
 
   active_state: State = State.start;
 
@@ -66,6 +66,22 @@ export class GridComponent implements OnInit {
     }
   }
 
+  reset_board() {
+    this.start_node_i = [Math.floor(this.rows / 2), Math.floor(this.cols / 3)];
+    this.end_node_i = [Math.floor(this.rows / 2), 2 * Math.floor(this.cols / 3)];
+
+    for (let i = 0; i < this.rows; i++) {
+      const cols: Array<Node> = [];
+      for (let j = 0; j < this.cols; j++) {
+        cols.push(new Node(State.open, i, j, this.cell_size));
+      }
+      this.nodes.push(cols);
+    }
+
+    this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.start;
+    this.nodes[this.end_node_i[0]][this.end_node_i[1]].state = State.end;
+  }
+
   constructor(public actions: ActionsService) {
     this.actions.get_actions().subscribe((action: Action | null) => {
       if (action) this.handle_action(action);
@@ -74,19 +90,10 @@ export class GridComponent implements OnInit {
     let screen_width = window.innerWidth;
     let screen_height = window.innerHeight;
 
-    this.cols = Math.floor(screen_width / this.cell_size);
-    this.rows = Math.floor(screen_height / this.cell_size);
+    this.cols = Math.ceil(screen_width / this.cell_size) + 1;
+    this.rows = Math.ceil(screen_height / this.cell_size);
 
-    for (let i = 0; i < this.rows; i++) {
-      const cols: Array<Node> = [];
-      for (let j = 0; j < this.cols; j++) {
-        cols.push(new Node(State.closed, i, j, this.cell_size));
-      }
-      this.nodes.push(cols);
-    }
-
-    this.nodes[this.start_node_i[0]][this.start_node_i[1]].state = State.start;
-    this.nodes[this.end_node_i[0]][this.end_node_i[1]].state = State.end;
+    this.reset_board();
   }
 
   ngOnInit() {}

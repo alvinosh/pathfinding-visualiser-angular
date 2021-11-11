@@ -5,6 +5,14 @@
 
 .node-list {
   position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(-10%, -50%);
+}
+
+.tool-bar {
+  position: absolute;
   left: 50%;
-  transform: translate(-50%, -120%);
+  top: 0;
+  transform: translate(-50%, 20%);
 }

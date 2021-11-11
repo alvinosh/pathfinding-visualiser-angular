@@ -4,14 +4,15 @@
 .container {
   border-radius: 15px;
 
-  background-color: $white;
+  background-color: $tool-bar-color;
+  color: $text-color;
 
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: space-around;
   align-items: center;
 
-  padding: 0 20px;
+  overflow: hidden;
 }
 
 .box {
@@ -36,19 +37,18 @@
   align-items: center;
 
   padding: 10px 10px;
-  margin: 5px;
 
   min-width: 10vw;
 
   transition: all 0.2s;
 
-  border-radius: 5px;
+  cursor: pointer;
 }
 
 .active {
-  background-color: rgba(black, 0.15);
+  background-color: $hover-color;
 }
 
-.node-container:hover {
-  background-color: rgba(black, 0.25);
+.node-container:hover:not(.active) {
+  color: $hover-color;
 }

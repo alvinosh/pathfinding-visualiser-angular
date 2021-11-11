@@ -1,0 +1,28 @@
+@import '../../styles/variables.scss';
+
+.container {
+  padding: 10px;
+
+  font-family: Roboto;
+
+  color: $text-color;
+
+  flex-grow: 1;
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px 20px;
+
+  min-width: 5vw;
+
+  transition: all 0.2s;
+
+  cursor: pointer;
+}
+
+.container:hover {
+  color: $hover-color;
+}
