@@ -1,11 +1,23 @@
 .start {
-  background-color: red;
+  border: none !important;
+  background-image: url('../../assets/star.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+
+  background-color: #fffe6a;
 }
 
 .end {
-  background-color: blue;
+  border: none !important;
+  background-image: url('../../assets/bullseye.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  background-color: #fffe6a;
 }
 
 .wall {
-  background-color: black;
+  border: none !important;
+  background-color: #0c3547;
 }

@@ -3,6 +3,7 @@
 
 .box {
   box-sizing: border-box;
-
-  border: 1px rgba($primary, 0.2) solid;
+  margin-right: -1px;
+  margin-bottom: -1px;
+  border: 1px rgba($primary, 1) solid;
 }
