@@ -1,7 +1,13 @@
-<div class="container" (mousedown)="toggle_down(true)" (mouseup)="toggle_down(false)">
+<div class="container">
   <div *ngFor="let r of [].constructor(rows); let i = index" class="row">
     <div *ngFor="let c of [].constructor(cols); let j = index" class="col">
-      <node #node [node]="nodes[i][j]" (mouseover)="change_node(i, j)"></node>
+      <node
+        #node
+        [node]="nodes[i][j]"
+        (mousedown)="handle_click_event($event, true, i, j)"
+        (mouseup)="handle_click_event($event, false, i, j)"
+        (mouseover)="change_node(i, j)"
+      ></node>
     </div>
   </div>
 </div>

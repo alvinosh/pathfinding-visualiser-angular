@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Action } from 'src/app/interfaces/action';
 import { State } from 'src/app/interfaces/node';
+import { ActionsService } from 'src/app/services/actions.service';
 
 @Component({
   selector: 'node-list',
@@ -13,9 +15,10 @@ export class NodeListComponent implements OnInit {
 
   change_active(state: State) {
     this.selected_state = state;
+    this.actions.new_action({ variant: 'state-change', state: this.selected_state });
   }
 
-  constructor() {}
+  constructor(public actions: ActionsService) {}
 
   ngOnInit(): void {}
 }
