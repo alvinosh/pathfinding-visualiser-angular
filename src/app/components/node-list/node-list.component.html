@@ -1,4 +1,8 @@
-<div class="container">
+<div
+  (window:keydown.shift)="change_active(State.open)"
+  (window:keyup.shift)="change_active(previous_state)"
+  class="container"
+>
   <div class="node-container" (click)="change_active(State.start)" [class.active]="selected_state === State.start">
     <div class="box start"></div>
     <div class="node-text">start</div>
@@ -12,7 +16,7 @@
     <div class="node-text">wall</div>
   </div>
   <div class="node-container" (click)="change_active(State.open)" [class.active]="selected_state === State.open">
-    <div class="box"></div>
+    <div class="box eraser"></div>
     <div class="node-text">eraser</div>
   </div>
 </div>

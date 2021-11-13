@@ -45,6 +45,15 @@
   cursor: pointer;
 }
 
+.eraser {
+  border: none !important;
+  background-image: url('../../../assets/eraser.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  background-color: #fffe6a;
+}
+
 .active {
   background-color: $hover-color;
 }

@@ -13,3 +13,7 @@
   display: flex;
   flex-flow: row nowrap;
 }
+
+.eraser-cursor {
+  cursor: url('../../../assets/eraser.svg') 8 8, auto !important;
+}

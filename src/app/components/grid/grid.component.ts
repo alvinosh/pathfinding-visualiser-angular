@@ -9,7 +9,7 @@ import { Node, State } from '../../interfaces/node';
   styleUrls: ['./grid.component.scss'],
 })
 export class GridComponent implements OnInit {
-  @ViewChildren('node') node_components: QueryList<any>;
+  State = State;
 
   cell_size = 30;
 

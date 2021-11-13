@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" [class.eraser-cursor]="active_state === State.open">
   <div *ngFor="let r of [].constructor(rows); let i = index" class="row">
     <div *ngFor="let c of [].constructor(cols); let j = index" class="col">
       <node
