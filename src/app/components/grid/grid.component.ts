@@ -95,6 +95,7 @@ export class GridComponent implements OnInit {
             this.a_star_algorithm(
               this.nodes[this.start_node_i[0]][this.start_node_i[1]],
               this.nodes[this.end_node_i[0]][this.end_node_i[1]],
+              true,
             );
         }
     }
@@ -136,10 +137,11 @@ export class GridComponent implements OnInit {
       return nbors;
     };
 
-    const color_path = (node: Node) => {
+    const color_path = async (node: Node, animate: boolean) => {
       let n = node.prev_node;
 
       while (n?.prev_node) {
+        if (animate) await this.delay(50);
         this.nodes[n.row][n.col].state = State.path;
         n = n.prev_node;
       }
@@ -162,14 +164,16 @@ export class GridComponent implements OnInit {
 
       if (current.row == end.row && current.col == end.col) {
         this.completed = true;
-        color_path(current);
+        color_path(current, animate);
         return;
       }
 
       open_set = open_set.filter((node) => node !== current);
       let nbors = find_nbors(current);
+      if (animate) await this.delay(50);
 
-      nbors.forEach(async (nbor) => {
+      for (let i = 0; i < nbors.length; i++) {
+        const nbor = nbors[i];
         let t_gscore = current.g_cost + distance(current, nbor);
         if (t_gscore < nbor.g_cost) {
           nbor.prev_node = current;
@@ -180,9 +184,8 @@ export class GridComponent implements OnInit {
               this.nodes[nbor.row][nbor.col].state = State.closed;
             open_set.push(nbor);
           }
-          await this.delay(5000);
         }
-      });
+      }
     }
   }
 
