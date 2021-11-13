@@ -27,6 +27,8 @@ export class GridComponent implements OnInit {
 
   completed = false;
 
+  animating = false;
+
   active_algorithm: Algorithm = 'a-star';
 
   change_node(i: number, j: number) {
@@ -106,6 +108,9 @@ export class GridComponent implements OnInit {
   }
 
   async a_star_algorithm(start: Node, end: Node, animate: boolean = false) {
+    if (this.animating) return;
+    this.animating = true;
+
     const smallest_f_cost = (array: Array<Node>): Node => {
       let smallest = array[0];
       array.forEach((node) => {
@@ -117,22 +122,29 @@ export class GridComponent implements OnInit {
     };
 
     const find_nbors = (node: Node): Array<Node> => {
-      const is_valid_nbor = (row: number, col: number): boolean => {
-        if (row < 0) return false;
-        if (col < 0) return false;
-        if (row > this.rows - 1) return false;
-        if (col > this.cols - 1) return false;
+      const add_valid_nbor = (row: number, col: number) => {
+        if (row < 0) return;
+        if (col < 0) return;
+        if (row > this.rows - 1) return;
+        if (col > this.cols - 1) return;
 
-        if (this.nodes[row][col].state === State.wall) return false;
-        return true;
+        if (this.nodes[row][col].state === State.wall) return;
+
+        nbors.push(this.nodes[row][col]);
       };
 
       let nbors: Array<Node> = [];
 
-      if (is_valid_nbor(node.row - 1, node.col + 0)) nbors.push(this.nodes[node.row - 1][node.col + 0]);
-      if (is_valid_nbor(node.row + 1, node.col + 0)) nbors.push(this.nodes[node.row + 1][node.col + 0]);
-      if (is_valid_nbor(node.row + 0, node.col + 1)) nbors.push(this.nodes[node.row + 0][node.col + 1]);
-      if (is_valid_nbor(node.row + 0, node.col - 1)) nbors.push(this.nodes[node.row + 0][node.col - 1]);
+      add_valid_nbor(node.row - 1, node.col + 0);
+      add_valid_nbor(node.row + 1, node.col + 0);
+      add_valid_nbor(node.row + 0, node.col + 1);
+      add_valid_nbor(node.row + 0, node.col - 1);
+
+      //   diagonals
+      //   add_valid_nbor(node.row - 1, node.col - 1);
+      //   add_valid_nbor(node.row + 1, node.col + 1);
+      //   add_valid_nbor(node.row - 1, node.col + 1);
+      //   add_valid_nbor(node.row + 1, node.col - 1);
 
       return nbors;
     };
@@ -164,6 +176,7 @@ export class GridComponent implements OnInit {
 
       if (current.row == end.row && current.col == end.col) {
         this.completed = true;
+        this.animating = false;
         color_path(current, animate);
         return;
       }
@@ -187,6 +200,8 @@ export class GridComponent implements OnInit {
         }
       }
     }
+
+    this.animating = false;
   }
 
   clear_paths() {
