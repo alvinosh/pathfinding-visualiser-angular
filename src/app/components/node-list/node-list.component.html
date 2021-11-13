@@ -11,4 +11,8 @@
     <div class="box wall"></div>
     <div class="node-text">wall</div>
   </div>
+  <div class="node-container" (click)="change_active(State.open)" [class.active]="selected_state === State.open">
+    <div class="box"></div>
+    <div class="node-text">eraser</div>
+  </div>
 </div>

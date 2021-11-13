@@ -45,17 +45,17 @@ export class GridComponent implements OnInit {
         this.end_node_i = [i, j];
         this.nodes[this.end_node_i[0]][this.end_node_i[1]].state = State.end;
         this.recalc_path(this.active_algorithm);
-
+        break;
+      case State.open:
+        if (this.start_node_i[0] === i && this.start_node_i[1] === j) break;
+        if (this.end_node_i[0] === i && this.end_node_i[1] === j) break;
+        this.nodes[i][j].state = State.open;
+        this.recalc_path(this.active_algorithm);
         break;
       case State.wall:
         if (this.start_node_i[0] === i && this.start_node_i[1] === j) break;
         if (this.end_node_i[0] === i && this.end_node_i[1] === j) break;
-
-        if (this.nodes[i][j].state !== State.wall) {
-          this.nodes[i][j].state = State.wall;
-        } else {
-          this.nodes[i][j].state = State.open;
-        }
+        this.nodes[i][j].state = State.wall;
         this.recalc_path(this.active_algorithm);
     }
   }
