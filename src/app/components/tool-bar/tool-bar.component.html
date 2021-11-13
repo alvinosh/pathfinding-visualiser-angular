@@ -1,13 +1,53 @@
 <div class="container">
-  <tool-button
-    ><div class="text">Algorithms</div>
-    <fa-icon [icon]="faCaretDown"></fa-icon
-  ></tool-button>
-  <tool-button
-    ><div class="text">Patterns</div>
-    <fa-icon [icon]="faCaretDown"></fa-icon
-  ></tool-button>
-  <tool-button><div class="text">Clear Board</div></tool-button>
-  <tool-button><div class="text">Visualise</div></tool-button>
+  <tool-button (click)="algorithm_toggle()">
+    <div class="text">Algorithms</div>
+    <fa-icon [icon]="faCaretDown"></fa-icon>
+    <div class="dropdown" [class.hidden]="algorithm === false">
+      <div
+        class="dropdown-element"
+        (click)="select_algorithm('a-star')"
+        [class.selected]="selected_algorithm === 'a-star'"
+      >
+        A*
+      </div>
+      <div
+        class="dropdown-element"
+        (click)="select_algorithm('dijkstra')"
+        [class.selected]="selected_algorithm === 'dijkstra'"
+      >
+        Dijkstra
+      </div>
+    </div>
+  </tool-button>
+
+  <tool-button (click)="pattern_toggle()">
+    <div class="text">Patterns</div>
+    <fa-icon [icon]="faCaretDown"></fa-icon>
+    <div class="dropdown" [class.hidden]="pattern === false">
+      <div
+        class="dropdown-element"
+        (click)="select_pattern('recursive-div')"
+        [class.selected]="selected_pattern === 'recursive-div'"
+      >
+        Recursive Division
+      </div>
+      <div
+        class="dropdown-element"
+        (click)="select_pattern('recursive-div-h')"
+        [class.selected]="selected_pattern === 'recursive-div-h'"
+      >
+        Recursive Division (horizontal skew)
+      </div>
+      <div
+        class="dropdown-element"
+        (click)="select_pattern('recursive-div-v')"
+        [class.selected]="selected_pattern === 'recursive-div-v'"
+      >
+        Recursive Division (vertical skew)
+      </div>
+    </div>
+  </tool-button>
+  <tool-button (click)="clear_board()"><div class="text">Clear Board</div></tool-button>
+  <tool-button (click)="run_algorithm()"><div class="text">Visualise</div></tool-button>
   <tool-button><div class="text">Speed</div></tool-button>
 </div>

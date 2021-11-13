@@ -13,6 +13,11 @@ export class NodeListComponent implements OnInit {
 
   selected_state = State.start;
 
+  stateNames(): Array<string> {
+    const keys = Object.keys(State);
+    return keys.slice(keys.length / 2);
+  }
+
   change_active(state: State) {
     this.selected_state = state;
     this.actions.new_action({ variant: 'state-change', state: this.selected_state });

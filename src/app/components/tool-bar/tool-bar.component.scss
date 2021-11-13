@@ -16,3 +16,36 @@
 .text {
   padding-right: 5px;
 }
+
+.dropdown {
+  min-width: 20%;
+  background-color: $tool-bar-color;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+
+  border-radius: 5px;
+
+  position: absolute;
+  top: 49px;
+}
+
+.dropdown-element {
+  color: $text-color !important;
+
+  padding: 10px;
+}
+
+.dropdown-element:hover {
+  background-color: $hover-color;
+}
+
+.selected {
+  background-color: $hover-color;
+}
+
+.hidden {
+  display: none;
+}
