@@ -8,6 +8,7 @@
     path: node.state === State.path,
     wall: node.state === State.wall,
     open: node.state === State.open,
-    closed: node.state === State.closed
+    closed: node.state === State.closed,
+    animate: node.state === State.wall || node.state === State.closed || node.state === State.path
   }"
 ></div>
