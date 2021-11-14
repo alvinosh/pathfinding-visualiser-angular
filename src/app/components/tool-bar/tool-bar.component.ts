@@ -21,8 +21,8 @@ export class ToolBarComponent implements OnInit {
     this.actions.new_action({ variant: 'algorithm-change', algorithm: alg });
   }
   select_pattern(pat: Pattern) {
-    this.actions.new_action({ variant: 'pattern-change', pattern: pat });
     this.selected_pattern = pat;
+    this.actions.new_action({ variant: 'pattern-change', pattern: pat });
   }
 
   clear_board() {
@@ -31,6 +31,10 @@ export class ToolBarComponent implements OnInit {
 
   run_algorithm() {
     this.actions.new_action({ variant: 'run-algorithm', algorithm: this.selected_algorithm });
+  }
+
+  run_pattern() {
+    this.actions.new_action({ variant: 'run-pattern', pattern: this.selected_pattern });
   }
 
   algorithm_toggle() {

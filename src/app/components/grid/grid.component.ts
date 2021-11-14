@@ -1,3 +1,4 @@
+import { NumberSymbol } from '@angular/common';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Action } from 'src/app/interfaces/action';
 import { Algorithm } from 'src/app/interfaces/algorithm';
@@ -90,6 +91,10 @@ export class GridComponent implements OnInit {
       case 'clear-board':
         this.reset_board();
         break;
+      case 'run-pattern':
+        this.reset_board();
+        this.r_maze_generator(this.cols, this.rows);
+        break;
       case 'run-algorithm':
         this.active_algorithm = action.algorithm;
         switch (action.algorithm) {
@@ -119,34 +124,6 @@ export class GridComponent implements OnInit {
         }
       });
       return this.nodes[smallest.row][smallest.col];
-    };
-
-    const find_nbors = (node: Node): Array<Node> => {
-      const add_valid_nbor = (row: number, col: number) => {
-        if (row < 0) return;
-        if (col < 0) return;
-        if (row > this.rows - 1) return;
-        if (col > this.cols - 1) return;
-
-        if (this.nodes[row][col].state === State.wall) return;
-
-        nbors.push(this.nodes[row][col]);
-      };
-
-      let nbors: Array<Node> = [];
-
-      add_valid_nbor(node.row - 1, node.col + 0);
-      add_valid_nbor(node.row + 1, node.col + 0);
-      add_valid_nbor(node.row + 0, node.col + 1);
-      add_valid_nbor(node.row + 0, node.col - 1);
-
-      //   diagonals
-      //   add_valid_nbor(node.row - 1, node.col - 1);
-      //   add_valid_nbor(node.row + 1, node.col + 1);
-      //   add_valid_nbor(node.row - 1, node.col + 1);
-      //   add_valid_nbor(node.row + 1, node.col - 1);
-
-      return nbors;
     };
 
     const color_path = async (node: Node, animate: boolean) => {
@@ -182,7 +159,7 @@ export class GridComponent implements OnInit {
       }
 
       open_set = open_set.filter((node) => node !== current);
-      let nbors = find_nbors(current);
+      let nbors = this.find_nbors(current);
       if (animate) await this.delay(50);
 
       for (let i = 0; i < nbors.length; i++) {
@@ -204,6 +181,80 @@ export class GridComponent implements OnInit {
     this.animating = false;
   }
 
+  async r_maze_generator(width: number, height: number, offset: [number, number] = [0, 0]) {
+    const rand_range = (area: [number, number]) => Math.floor(Math.random() * (area[1] - area[0] - 2) + area[0] + 1);
+    // define the area
+    let x_area: [number, number] = [offset[0], offset[0] + width - 1];
+    let y_area: [number, number] = [offset[1], offset[1] + height - 1];
+
+    // return condition
+    if (width < 2 || height < 2) return;
+
+    // pick if wall is horizontal or not
+    let is_hor = width < height ? true : false;
+    // pick random offset
+    let wallid = is_hor ? Math.floor(rand_range(y_area) / 2) * 2 : Math.floor(rand_range(x_area) / 2) * 2;
+
+    if (is_hor) {
+      //build wall
+      for (let i = x_area[0]; i <= x_area[1]; i++) {
+        const node = this.nodes[wallid][i];
+        if (node.state !== State.start && node.state !== State.end) node.state = State.wall;
+      }
+    } else {
+      for (let i = y_area[0]; i <= y_area[1]; i++) {
+        const node = this.nodes[i][wallid];
+        if (node.state !== State.start && node.state !== State.end) node.state = State.wall;
+      }
+    }
+    //cut wall
+    let c_i;
+    if (is_hor) {
+      c_i = Math.floor(rand_range(x_area) / 2) * 2 + 1;
+      const node = this.nodes[wallid][c_i];
+      if (node.state !== State.start && node.state !== State.end) node.state = State.open;
+    } else {
+      c_i = Math.floor(rand_range(y_area) / 2) * 2 + 1;
+      const node = this.nodes[c_i][wallid];
+      if (node.state !== State.start && node.state !== State.end) node.state = State.open;
+    }
+
+    if (is_hor) {
+      await this.r_maze_generator(width, wallid - y_area[0], [offset[0], offset[1]]);
+      await this.r_maze_generator(width, y_area[1] - wallid, [offset[0], wallid + 1]);
+    } else {
+      await this.r_maze_generator(wallid - x_area[0], height, [offset[0], offset[1]]);
+      await this.r_maze_generator(x_area[1] - wallid, height, [wallid + 1, offset[1]]);
+    }
+  }
+
+  find_nbors(node: Node): Array<Node> {
+    const add_valid_nbor = (row: number, col: number) => {
+      if (row < 0) return;
+      if (col < 0) return;
+      if (row > this.rows - 1) return;
+      if (col > this.cols - 1) return;
+
+      if (this.nodes[row][col].state === State.wall) return;
+
+      nbors.push(this.nodes[row][col]);
+    };
+
+    let nbors: Array<Node> = [];
+
+    add_valid_nbor(node.row - 1, node.col + 0);
+    add_valid_nbor(node.row + 1, node.col + 0);
+    add_valid_nbor(node.row + 0, node.col + 1);
+    add_valid_nbor(node.row + 0, node.col - 1);
+
+    //   diagonals
+    //   add_valid_nbor(node.row - 1, node.col - 1);
+    //   add_valid_nbor(node.row + 1, node.col + 1);
+    //   add_valid_nbor(node.row - 1, node.col + 1);
+    //   add_valid_nbor(node.row + 1, node.col - 1);
+
+    return nbors;
+  }
   clear_paths() {
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.cols; j++) {
@@ -244,6 +295,9 @@ export class GridComponent implements OnInit {
 
     this.cols = Math.ceil(screen_width / this.cell_size) + 1;
     this.rows = Math.ceil(screen_height / this.cell_size);
+
+    console.log('width: ' + this.cols);
+    console.log('height: ' + this.rows);
 
     this.start_node_i = [Math.floor(this.rows / 2), Math.floor(this.cols / 3)];
     this.end_node_i = [Math.floor(this.rows / 2), 2 * Math.floor(this.cols / 3)];
