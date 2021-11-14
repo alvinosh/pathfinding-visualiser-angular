@@ -220,11 +220,11 @@ export class GridComponent implements OnInit {
     }
 
     if (is_hor) {
-      await this.r_maze_generator(width, wallid - y_area[0], [offset[0], offset[1]]);
-      await this.r_maze_generator(width, y_area[1] - wallid, [offset[0], wallid + 1]);
+       this.r_maze_generator(width, wallid - y_area[0], [offset[0], offset[1]]);
+       this.r_maze_generator(width, y_area[1] - wallid, [offset[0], wallid + 1]);
     } else {
-      await this.r_maze_generator(wallid - x_area[0], height, [offset[0], offset[1]]);
-      await this.r_maze_generator(x_area[1] - wallid, height, [wallid + 1, offset[1]]);
+       this.r_maze_generator(wallid - x_area[0], height, [offset[0], offset[1]]);
+       this.r_maze_generator(x_area[1] - wallid, height, [wallid + 1, offset[1]]);
     }
   }
 
