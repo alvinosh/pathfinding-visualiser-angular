@@ -15,11 +15,6 @@ export class NodeListComponent implements OnInit {
 
   eraser: boolean = false;
 
-  stateNames(): Array<string> {
-    const keys = Object.keys(State);
-    return keys.slice(keys.length / 2);
-  }
-
   change_active(state: State) {
     if (this.selected_state !== State.open) {
       this.previous_state = this.selected_state;
