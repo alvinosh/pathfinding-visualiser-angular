@@ -1,7 +1,12 @@
-$grid-color: #afd8f8;
-$background-color: #ffffff;
+$tool-bar-color: #222e50;
+$hover-color: #007991;
+$text-color: #bcd8c1;
 
-$tool-bar-color: #34495e;
-$hover-color: #1abc9c;
+$start-node-color: $hover-color;
+$end-node-color: $hover-color;
+$path-node-color: $hover-color;
+$wall-node-color: #439a86;
+$closed-node-color: $tool-bar-color;
+$open-node-color: #e9d985;
 
-$text-color: white;
+$background-color: $open-node-color;

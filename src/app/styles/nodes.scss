@@ -5,7 +5,7 @@
   background-position: center;
   background-size: 70%;
 
-  background-color: #fffe6a;
+  background-color: $start-node-color;
 }
 
 .end {
@@ -14,19 +14,23 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 70%;
-  background-color: #fffe6a;
+  background-color: $end-node-color;
 }
 
 .wall {
   border: none !important;
-  background-color: #0c3547;
+  background-color: $wall-node-color;
 }
 
 .path {
   border: none !important;
-  background-color: #fffe6a;
+  background-color: $path-node-color;
 }
 
 .closed {
-  background-color: #afd8f8;
+  background-color: $closed-node-color;
+}
+
+.open {
+  background-color: $open-node-color;
 }
